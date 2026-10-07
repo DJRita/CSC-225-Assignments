@@ -5,7 +5,7 @@ Place the code within your editor-of-choice, I use Visual Studio for example, na
 
 =============================================
 
-The busiest_hour() logic:
+The busiest_hour() logic:\
   First, "busiest_hour" is defined, using no other variables than the code within the class "Login_monitor", or "self".
 **$  def busiest_hour(self):**
   
