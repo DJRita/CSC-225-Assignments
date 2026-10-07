@@ -21,7 +21,7 @@ raw_logs = [
 class LoginMonitor:
     def __init__(self, raw_logs):
         self.raw_logs = raw_logs
-        self.parsed_logs = [] #nothing parsed yet 
+        self.parsed_logs = []
 
     def parse_line(self, line):
         """
@@ -131,8 +131,7 @@ class LoginMonitor:
             
         if not hour_counts:
             return None
-            
-        # Find the hour string with the maximum number of attempts
+        
         busiest = max(hour_counts, key=hour_counts.get)
         return (busiest, hour_counts[busiest])
          
