@@ -6,7 +6,7 @@ Place the code within your editor-of-choice, I use Visual Studio for example, na
 =============================================
 
 The busiest_hour() logic:\
-  First, "busiest_hour" is defined, using no other variables than the code within the class "Login_monitor", or "self".
+  First, "busiest_hour" is defined, using no other variables than the code within the class "Login_monitor", or "self".\
 **$  def busiest_hour(self):**
   
   Second, hour_counts is created as a list. This is due to the fact we will have to count more than one timestamp.
