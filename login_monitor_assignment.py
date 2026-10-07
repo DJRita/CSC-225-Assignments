@@ -101,14 +101,18 @@ class LoginMonitor:
     #Look at EVERY record for this user not None, not an error)
 
     def multi_ip_users(self, min_ips=2):
-        all_users = set(record("username") for record in self.parsed_logs if record)
+        all_users = set()
+        for record in self.parsed_logs:
+            if record:
+                all_users.add(record["username"])
+
+        print(all_users)
+        result = []
+        for user in all_users:
+            if len(self.unique_ips(user)) >= min_ips:
+                result.append(user)
         
-        multi_ip = []
-        for multi_ip in all_users:       
-            if len(self.unique_ips("username")) >= min_ips:
-                multi_ip.append("username")
-                    
-        return sorted(multi_ip)
+        return sorted(result)
 
 
     # TODO: Return a SORTED LIST of usernames who have connected from
@@ -117,18 +121,13 @@ class LoginMonitor:
     # IPs one user has this is about traffic volume, not security risk).
 
     def busiest_hour(self):
-        if not self.parsed_logs:
-            return None
-            
         hour_counts = {}
-        for record in self.parsed_logs:
-            if record is None:
-                continue
 
-        timestamp = record["timestamp"]
-        hour = timestamp.split(" ")[1].split(":")[0]
-        
-        hour_counts[hour] = hour_counts.get(hour, 0) + 1
+        for record in self.parsed_logs:
+            if record:
+                timestamp = record["timestamp"]
+                hour = timestamp.split(" ")[1].split(":")[0]
+                hour_counts[hour] = hour_counts.get(hour, 0) + 1
             
         if not hour_counts:
             return None
@@ -146,6 +145,7 @@ class LoginMonitor:
 
 
     #def generate_alerts(self):
+         
 
     # TODO: Return a LIST of human-readable alert strings by combining
     # the other methods these are just strings, make them readable. Something like:
@@ -167,6 +167,10 @@ print(monitor.unique_ips("jdoe"))
 print(monitor.unique_ips("guest"))
 
 print(monitor.multi_ip_users())
+print(monitor.multi_ip_users(1))
+
+print(monitor.busiest_hour())
+
 
 # TODO: add a STOP & TEST style print block for unique_ips()
 # (test at least two different usernames)
